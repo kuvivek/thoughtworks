@@ -7,7 +7,7 @@ ARG NEWSFEED_SERVICE_URL
 ARG STATIC_URL
 ARG QUOTE_SERVICE_URL
 RUN apt-get update && apt-get install -y \
-    python3
+    python3 procps
 RUN mkdir -p /app
 WORKDIR /app
 COPY --from=clone /app/infra-problem /app

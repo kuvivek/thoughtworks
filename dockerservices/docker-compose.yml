@@ -4,6 +4,7 @@ services:
     build:
       context: ./quotes
     image: quotes:0.1
+    container_name: quotes
     ports:
       - 8002:8002
     logging:
@@ -15,6 +16,7 @@ services:
     build:
       context: ./newsfeed
     image: newsfeed:0.1
+    container_name: newsfeed
     ports:
       - 8001:8001
     logging:
@@ -26,6 +28,7 @@ services:
     build:
       context: ./front-end
     image: frontend:0.1
+    container_name: frontend
     ports:
       - 8080:8080
       - 8000:8000
