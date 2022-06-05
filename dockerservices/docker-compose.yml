@@ -1,0 +1,39 @@
+version: '3.9'
+services:
+  quotes:
+    build:
+      context: ./quotes
+    image: quotes:0.1
+    ports:
+      - 8002:8002
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+
+  newsfeed:
+    build:
+      context: ./newsfeed
+    image: newsfeed:0.1
+    ports:
+      - 8001:8001
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+
+  front-end:
+    build:
+      context: ./front-end
+    image: frontend:0.1
+    ports:
+      - 8080:8080
+      - 8000:8000
+    environment:
+      NEWSFEED_SERVICE_URL: "http://localhost:8001/api/newsfeed"
+      STATIC_URL: "http://localhost:8000"
+      QUOTE_SERVICE_URL: "http://localhost:8002/api/quote"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
