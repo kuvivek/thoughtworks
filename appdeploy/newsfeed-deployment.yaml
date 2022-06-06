@@ -1,0 +1,27 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: newsfeed
+spec:
+  replicas: 2 
+  selector:
+    matchLabels:
+      name: newsfeed
+  template:
+    metadata:
+      labels:
+        name: newsfeed
+    spec:
+      containers:
+        - name: newsfeed 
+          image: 943618641173.dkr.ecr.us-east-1.amazonaws.com/newsfeed:0.1 
+          imagePullPolicy: IfNotPresent 
+          ports:
+            - containerPort: 8081
+          livenessProbe:
+            tcpSocket:
+              port: 8081
+          env:
+            - name: APP_PORT
+              value: "8081"

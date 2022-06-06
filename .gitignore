@@ -1,0 +1,8 @@
+*.jar
+*.class
+.lein-*
+*.swp
+.DS_Store
+*.tfstate
+.terraform/
+.terraform.lock.hcl

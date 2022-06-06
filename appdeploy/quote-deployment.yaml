@@ -1,0 +1,27 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: quote
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      name: quote
+  template:
+    metadata:
+      labels:
+        name: quote
+    spec:
+      containers:
+        - name: quote
+          image: 943618641173.dkr.ecr.us-east-1.amazonaws.com/quotes:0.1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8081
+          livenessProbe:
+            tcpSocket:
+              port: 8002
+          env:
+            - name: APP_PORT
+              value: "8002"

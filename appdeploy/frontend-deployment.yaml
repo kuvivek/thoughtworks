@@ -1,0 +1,36 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      name: frontend
+  template:
+    metadata:
+      labels:
+        name: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: 943618641173.dkr.ecr.us-east-1.amazonaws.com/frontend:0.1 
+          imagePullPolicy: IfNotPresent 
+          ports:
+            - containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /ping
+              port: 8080
+          env:
+            - name: APP_PORT
+              value: "8080"
+            - name: NEWSFEED_SERVICE_URL
+              value: "http://${NEWSFEED_SERVICE_URL}:8001/api/newsfeed"
+            - name: STATIC_URL
+              value: "http://${STATIC_URL}:8080"
+            - name: QUOTE_SERVICE_URL
+              value: "http://${QUOTE_SERVICE_URL}:8002/api/quote"
+            - name: NEWSFEED_SERVICE_TOKEN
+              value: "T1&eWbYXNWG1w1^YGKDPxAWJ@^et^&kX"
