@@ -21,7 +21,66 @@ Deploy app & infra from local system.
 ## **Setup Infrastructure:**
 
 1. Configure AWS Vault with access key, secret key, region using MFA
-2. Run `deploy-infra.sh` script, this deploy AWS infra using terraform. (Takes around 10-15mins to deploy whole infra)
+```
+ip-192-168-0-93:thoughtworks valassis$ aws-vault exec vivek-iam-personal --duration=12h
+Enter MFA code for arn:aws:iam::943618641173:mfa/vivek: 041459
+bash: export: `%1~': not a valid identifier
+bash: export: `0': not a valid identifier
+
+The default interactive shell is now zsh.
+To update your account to use zsh, please run `chsh -s /bin/zsh`.
+For more details, please visit https://support.apple.com/kb/HT208050.
+bash-3.2$
+
+```
+2. Verify the terraform scripts are formatted and validated through the docker instance using the following command
+```
+bash-3.2$ docker-compose -f docker-compose.yml run --rm terraform workspace list
+Creating thoughtworks_terraform_run ... done
+* default
+  dev
+  production
+
+bash-3.2$ 
+bash-3.2$ docker-compose -f docker-compose.yml run --rm terraform workspace select dev
+Creating thoughtworks_terraform_run ... done
+Switched to workspace "dev".
+bash-3.2$
+bash-3.2$ docker-compose -f docker-compose.yml run --rm terraform fmt
+Creating thoughtworks_terraform_run ... done
+bash-3.2$
+bash-3.2$ docker-compose -f docker-compose.yml run --rm terraform validate
+Creating thoughtworks_terraform_run ... done
+Success! The configuration is valid.
+
+bash-3.2$
+````
+3. Initialize terraform and create resources.
+````
+bash-3.2$ docker-compose -f docker-compose.yml run --rm terraform init
+Creating thoughtworks_terraform_run ... done
+
+Initializing the backend...
+
+Initializing provider plugins...
+- Reusing previous version of hashicorp/aws from the dependency lock file
+- Using previously-installed hashicorp/aws v4.15.1
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+bash-3.2$
+bash-3.2$
+````
+
+
+2. Run `terraform plan` and `terraform apply` script, this deploy AWS infra using terraform. (Takes around 10-15mins to deploy whole infra)
 
 ## **Setup Application**
 
