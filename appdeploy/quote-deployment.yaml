@@ -1,27 +1,30 @@
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  labels:
+    service: quote
   name: quote
 spec:
   replicas: 2
   selector:
     matchLabels:
-      name: quote
+      service: quote
   template:
     metadata:
       labels:
-        name: quote
+        network/web: "true"
+        service: quote
     spec:
       containers:
         - name: quote
           image: 943618641173.dkr.ecr.us-east-1.amazonaws.com/quotes:0.1
           imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: 8081
+            - containerPort: 8002
           livenessProbe:
             tcpSocket:
               port: 8002
           env:
             - name: APP_PORT
               value: "8002"
+      restartPolicy: Always
