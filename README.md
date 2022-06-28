@@ -22,7 +22,7 @@ Deploy app & infra from local system.
 
 1. Configure AWS Vault with access key, secret key, region using MFA
 ```
-ip-192-168-0-93:thoughtworks valassis$ aws-vault exec vivek-iam-personal --duration=12h
+ip-192-168-0-93:thoughtworks vivek$ aws-vault exec vivek-iam-personal --duration=12h
 Enter MFA code for arn:aws:iam::943618641173:mfa/vivek: 041459
 bash: export: `%1~': not a valid identifier
 bash: export: `0': not a valid identifier
