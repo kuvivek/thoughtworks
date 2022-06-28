@@ -7,6 +7,8 @@ services:
     container_name: quotes
     ports:
       - 8002:8002
+    networks:
+     - web
     logging:
       driver: "json-file"
       options:
@@ -19,6 +21,8 @@ services:
     container_name: newsfeed
     ports:
       - 8001:8001
+    networks:
+     - web
     logging:
       driver: "json-file"
       options:
@@ -32,6 +36,8 @@ services:
     ports:
       - 8080:8080
       - 8000:8000
+    networks:
+     - web
     environment:
       NEWSFEED_SERVICE_URL: "http://localhost:8001/api/newsfeed"
       STATIC_URL: "http://localhost:8000"
@@ -40,3 +46,6 @@ services:
       driver: "json-file"
       options:
         max-size: "50m"
+
+networks:
+ web:
