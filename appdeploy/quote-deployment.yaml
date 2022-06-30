@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: quote
-          image: 943618641173.dkr.ecr.us-east-1.amazonaws.com/quotes:0.1
+          image: 943618641173.dkr.ecr.us-east-1.amazonaws.com/quotes:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8002

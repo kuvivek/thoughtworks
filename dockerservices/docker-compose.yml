@@ -34,18 +34,34 @@ services:
     image: frontend:0.1
     container_name: frontend
     ports:
-      - 8080:8080
+      - 8081:8080
       - 8000:8000
     networks:
      - web
     environment:
-      NEWSFEED_SERVICE_URL: "http://localhost:8001/api/newsfeed"
+      NEWSFEED_SERVICE_URL: "http://localhost:8001/api/feeds"
       STATIC_URL: "http://localhost:8000"
       QUOTE_SERVICE_URL: "http://localhost:8002/api/quote"
     logging:
       driver: "json-file"
       options:
         max-size: "50m"
+
+  haproxy:
+    build:
+      context: ./haproxy
+    image: haproxy:0.1
+    container_name: haproxy
+    volumes:
+      - ./haproxy:/usr/local/etc/haproxy
+    links:
+      - newsfeed
+      - quotes
+    ports:
+      - "80:80"
+      - "8404:8404"
+    networks:
+     - web
 
 networks:
  web:
